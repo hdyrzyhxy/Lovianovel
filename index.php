@@ -1,10 +1,3 @@
-<?php
-require_once 'config/database.php';  // استدعاء ملف الاتصال بقاعدة البيانات
-
-$sql = "SELECT * FROM stories ORDER BY created_at DESC";
-$result = $conn->query($sql);
-?>
-
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -18,32 +11,20 @@ $result = $conn->query($sql);
         <h1>موقع نشر الروايات</h1>
         <nav>
             <ul>
-                <li><a href="index.php">الروايات</a></li>
-                <li><a href="upload.php">رفع رواية جديدة</a></li>
+                <li><a href="index.html">الروايات</a></li>
+                <li><a href="upload.html">رفع رواية جديدة</a></li>
             </ul>
         </nav>
     </header>
 
     <div class="novels-list">
-        <?php
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                echo "<div class='novel'>";
-                echo "<h2>" . $row['title'] . "</h2>";
-                echo "<p>بقلم: " . $row['author'] . "</p>";
-                echo "<p>" . substr($row['content'], 0, 150) . "...</p>";
-                echo "<a href='view.php?id=" . $row['id'] . "'>اقرأ المزيد</a>";
-                echo "</div>";
-            }
-        } else {
-            echo "<p>لا توجد روايات حالياً</p>";
-        }
-        $conn->close();
-        ?>
+        <!-- سيتم عرض الروايات هنا باستخدام JavaScript -->
     </div>
 
     <footer>
-        <a href="upload.php">رفع رواية جديدة</a>
+        <a href="upload.html">رفع رواية جديدة</a>
     </footer>
+
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
