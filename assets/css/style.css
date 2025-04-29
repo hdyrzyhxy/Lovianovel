@@ -2,15 +2,15 @@
 body {
     font-family: 'Arial', sans-serif;
     background-color: #fff;
-    background-image: url('assets/images/flowers-background.png'); /* يمكنك إضافة صورة للزهور هنا */
+    background-image: url('assets/images/flowers-background.png');
     background-repeat: repeat;
     margin: 0;
     padding: 0;
-    color: #4b3c31; /* لون دافئ للقهوة */
+    color: #4b3c31;
 }
 
 header {
-    background-color: #6d4c41; /* لون دافئ مثل القهوة */
+    background-color: #6d4c41;
     color: white;
     padding: 30px;
     text-align: center;
@@ -48,11 +48,6 @@ header nav ul li a {
     width: 250px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    transition: transform 0.3s ease;
-}
-
-.novel:hover {
-    transform: scale(1.05);
 }
 
 .novel h2 {
