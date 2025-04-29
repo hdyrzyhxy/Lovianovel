@@ -1,23 +1,3 @@
-<?php
-require_once 'config/database.php';  // استدعاء الاتصال بقاعدة البيانات
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $title = $_POST['title'];
-    $author = $_POST['author'];
-    $content = $_POST['content'];
-
-    $sql = "INSERT INTO stories (title, author, content) VALUES ('$title', '$author', '$content')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "<div class='success-message'>تم إضافة الرواية بنجاح!</div>";
-    } else {
-        echo "<div class='error-message'>خطأ: " . $conn->error . "</div>";
-    }
-}
-
-$conn->close();
-?>
-
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -31,21 +11,39 @@ $conn->close();
         <h1>رفع رواية جديدة</h1>
     </header>
 
-    <form method="POST" action="upload.php" class="upload-form">
+    <form class="upload-form">
         <label for="title">عنوان الرواية:</label>
-        <input type="text" name="title" required><br>
+        <input type="text" id="title" required><br>
 
         <label for="author">اسم المؤلف:</label>
-        <input type="text" name="author" required><br>
+        <input type="text" id="author" required><br>
 
         <label for="content">محتوى الرواية:</label><br>
-        <textarea name="content" rows="10" required></textarea><br>
+        <textarea id="content" rows="10" required></textarea><br>
 
         <button type="submit">رفع الرواية</button>
     </form>
 
     <footer>
-        <a href="index.php">العودة إلى الصفحة الرئيسية</a>
+        <a href="index.html">العودة إلى الصفحة الرئيسية</a>
     </footer>
+
+    <script>
+        // إضافة وظيفة حفظ الروايات باستخدام LocalStorage
+        document.querySelector(".upload-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const title = document.getElementById("title").value;
+            const author = document.getElementById("author").value;
+            const content = document.getElementById("content").value;
+
+            let novels = JSON.parse(localStorage.getItem("novels")) || [];
+            novels.push({ title, author, content });
+
+            localStorage.setItem("novels", JSON.stringify(novels));
+
+            alert("تم رفع الرواية بنجاح!");
+        });
+    </script>
 </body>
 </html>
