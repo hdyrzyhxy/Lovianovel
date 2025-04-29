@@ -1,36 +1,24 @@
-<?php
-require_once 'config/database.php';  // استدعاء الاتصال بقاعدة البيانات
+// تحميل الروايات من localStorage وعرضها على الصفحة
+document.addEventListener("DOMContentLoaded", function() {
+    const novelsList = document.querySelector(".novels-list");
 
-$id = $_GET['id'];
-$sql = "SELECT * FROM stories WHERE id = $id";
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
-?>
+    let novels = JSON.parse(localStorage.getItem("novels")) || [];
 
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $row['title']; ?></title>
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
-    <header>
-        <h1><?php echo $row['title']; ?></h1>
-    </header>
+    if (novels.length === 0) {
+        novelsList.innerHTML = "<p>لا توجد روايات حالياً.</p>";
+    } else {
+        novels.forEach(novel => {
+            const novelElement = document.createElement("div");
+            novelElement.classList.add("novel");
 
-    <div class="novel-content">
-        <h3>بقلم: <?php echo $row['author']; ?></h3>
-        <p><?php echo nl2br($row['content']); ?></p>
-    </div>
+            novelElement.innerHTML = `
+                <h2>${novel.title}</h2>
+                <p>بقلم: ${novel.author}</p>
+                <p>${novel.content.substring(0, 150)}...</p>
+                <a href="#">اقرأ المزيد</a>
+            `;
 
-    <footer>
-        <a href="index.php">العودة إلى الصفحة الرئيسية</a>
-    </footer>
-</body>
-</html>
-
-<?php
-$conn->close();
-?>
+            novelsList.appendChild(novelElement);
+        });
+    }
+});
